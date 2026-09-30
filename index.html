@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stadium Club Staff Recognition Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#2DB5A6;--purple:#4B2A6E;--lime:#D8E46E;--bg:#FAFBF6;--card:#fff;--ink:#1a1a1a;--mute:#64606b;--line:#e4e2e8;--soft:#eef8f6;--box-shadow:0 1px 0 var(--line);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15101c;--card:#211a2c;--ink:#f3f1f6;--mute:#b0a9ba;--line:#3a3048;--soft:#1d2a2b}}
+:root[data-theme="dark"]{--bg:#15101c;--card:#211a2c;--ink:#f3f1f6;--mute:#b0a9ba;--line:#3a3048;--soft:#1d2a2b}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;font-size:14px;line-height:1.5}
+header{background:#111;color:#fff;padding:14px 20px 0;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{display:flex;flex-direction:column;gap:4px;width:44px}.logo i{display:block;height:6px;border-radius:1px}
+.logo i:nth-child(1){background:var(--teal)}.logo i:nth-child(2){background:#8a5cc0}.logo i:nth-child(3){background:var(--lime)}
+.brand h1{margin:0;font-size:20px;font-weight:800;letter-spacing:.06em;line-height:1.1}
+.brand small{display:block;font-weight:500;letter-spacing:0;color:#bbb;font-size:12px;margin-top:2px}
+nav{display:flex;gap:2px;overflow-x:auto;margin-top:12px}
+nav button{background:none;border:0;color:#cfcfd6;font:600 13px Montserrat,sans-serif;padding:10px 16px;cursor:pointer;border-bottom:4px solid transparent;white-space:nowrap}
+nav button:hover{color:#fff}nav button.on{color:#fff;border-color:var(--lime)}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+h2{font-size:22px;margin:0 0 4px;font-weight:800}.sub{color:var(--mute);margin:0 0 18px}
+h3{font-size:15px;margin:0 0 8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px;border-top:5px solid var(--teal)}
+.kpi:nth-child(2){border-color:var(--purple)}.kpi:nth-child(3){border-color:var(--lime)}.kpi:nth-child(4){border-color:#8a5cc0}
+.kpi b{display:block;font-size:34px;font-weight:800;line-height:1.1}.kpi span{color:var(--mute);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.dept{cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .15s,border-color .15s}
+.dept:hover{transform:translateY(-3px);border-color:var(--teal)}
+.dept h3{display:flex;justify-content:space-between;align-items:center}
+.dept p{margin:6px 0 0;color:var(--mute);font-size:12px}
+.pill{display:inline-block;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;background:var(--soft);color:var(--purple)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .pill{color:var(--lime)}}
+.pill.warn{background:#fde7d6;color:#9a3d00}.pill.ok{background:var(--lime);color:#2c3300}.pill.pp{background:var(--purple);color:#fff}
+.bar{height:6px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--lime))}
+.spin{background:var(--purple);color:#fff;border-radius:8px;padding:20px;margin-bottom:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.spin h3{margin:0;font-size:17px}.spin p{margin:2px 0 0;color:#dcd2ea;font-size:13px}
+.spin .out{flex:1;min-width:220px;font-size:26px;font-weight:800;color:var(--lime)}
+.spin select{background:#fff;color:#111}
+button.btn,.btn{background:var(--teal);color:#08211e;border:0;border-radius:4px;padding:9px 16px;font:700 13px Montserrat,sans-serif;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}.btn.pp{background:var(--purple);color:#fff}.btn.lime{background:var(--lime);color:#2c3300}.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.btn.sm{padding:4px 10px;font-size:12px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:8px 10px;width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--teal);outline-offset:1px}
+label{font-size:12px;font-weight:600;color:var(--mute);display:block;margin-bottom:3px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:22px}
+.form .wide{grid-column:1/-1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:6px 14px;font:600 12px Montserrat,sans-serif;cursor:pointer}
+.chip.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+.row{display:grid;grid-template-columns:1.4fr 90px 1.6fr 34px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.x{background:none;border:0;color:var(--mute);font-size:20px;cursor:pointer}.x:hover{color:#c0392b}
+.entry{border-left:5px solid var(--teal)}.entry.rep{border-color:#e08a3c}
+.entry .meta{color:var(--mute);font-size:12px;margin-top:6px}
+.sp{display:grid;grid-template-columns:auto 1fr;gap:6px 16px}
+.sp .n{font-size:30px;font-weight:800;color:var(--teal);line-height:1}
+.sp .flds{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.st{border:0;cursor:pointer;font:700 11px Montserrat,sans-serif}
+.empty{border:2px dashed var(--line);border-radius:8px;padding:28px;text-align:center;color:var(--mute)}
+details.card summary{cursor:pointer;font-weight:700}details.card ul{margin:8px 0 0;padding-left:18px;color:var(--mute)}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#111;color:var(--lime);padding:10px 18px;border-radius:30px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.show{opacity:1}
+footer{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+@media(max-width:600px){.row{grid-template-columns:1fr 70px 30px}.row .nt{grid-column:1/-1;order:5}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="brand"><div class="logo"><i></i><i></i><i></i></div>
+<h1>STADIUM CLUB<small>Staff Recognition Tracker</small></h1><span class="pill" id="live" style="margin-left:auto">Connecting…</span></div>
+<nav id="nav"></nav></header>
+<main id="app"></main><div class="toast" id="toast"></div>
+<script>
+const DEPTS=["Bartenders","Servers","Hosts / Hostess","SIM Attendants","Bussers","Food Runners","Barbacks"];
+const FOCUS={"Bartenders":"Beverage knowledge, speed, guest engagement, responsible service, upselling, bar setup/cleanliness, teamwork with barbacks.","Servers":"Guest service, menu knowledge, sales, prebussing, order accuracy, table maintenance, service recovery, teamwork.","Hosts / Hostess":"Warm greeting, reservations, OpenTable accuracy, phone etiquette, communication, organization, guest flow.","SIM Attendants":"Bay readiness, equipment knowledge, guest instruction, troubleshooting, safety, engagement, communication.","Bussers":"Table maintenance, cleanliness, fast resets, anticipating needs, support during volume, teamwork.","Food Runners":"Ticket accuracy, food presentation, plate knowledge, table numbers, communication, urgency, takeout standards.","Barbacks":"Stocking, cleanliness, anticipation, urgency, glassware/ice readiness, organization, bartender support."};
+const IDEAS={"Bartenders":["Engages bar guests","Supports fellow bartender/barback","Accurate pours/checks","Upsells + knows builds","Handles rush calmly","Anticipates bar needs","Maintains wells/glassware"],"Servers":["Builds guest connection","Helps sections/food runs","Order + table accuracy","Menu knowledge + upsells","Controls section in rush","Solves needs early","Prebusses + resets"],"Hosts / Hostess":["Strong welcome/acknowledgement","Communicates with floor","OpenTable + reservation accuracy","Knows venue/options","Manages lines/flow","Anticipates seating issues","Host stand organized"],"SIM Attendants":["Engages bay guests","Supports hosts/servers","Bay/equipment accuracy","Knows games + features","Turns bays efficiently","Troubleshoots proactively","Bays ready/clean"],"Bussers":["Supports guest comfort","Helps servers/runners","Fast clean resets","Knows table priorities","Keeps up in rush","Anticipates clears/refills","Maintains dining room"],"Food Runners":["Confirms guest needs","Communicates with servers/BOH","Correct table/plates","Knows dishes/condiments","Runs with urgency","Catches missing items","Expo/run area organized"]};
+const IDEA_LBL=["Guest service","Teamwork","Accuracy / standards","Sales / knowledge","High-volume","Initiative","Cleanliness / readiness"];
+const CATS=[["Guest Service","Warm welcome, attentiveness, guest connection, and creating a memorable experience.","Created a strong connection with a guest and made them feel seen, welcomed, or celebrated.","All"],["Teamwork","Supports teammates, communicates needs, helps other departments, and works as one team.","Jumped into another section or role to help the team without waiting to be asked.","All"],["Above & Beyond","Takes an extra step without being asked and exceeds normal expectations.","Handled an extra guest/team need that was outside the normal expectation.","All"],["Product & Service Knowledge","Strong menu, beverage, simulator, reservation, or service-step knowledge.","Confidently answered questions, explained options, or coached another associate.","All; especially Bartenders, Servers, Hosts, SIM"],["Reliability & Consistency","Dependable attendance, punctuality, preparation, and consistent execution.","Shows up prepared, follows through, and can be counted on shift after shift.","All"],["Communication","Clear, respectful communication with guests, peers, leaders, and BOH/support teams.","Kept the team informed and prevented a service issue through clear communication.","All"],["Maintaining Standards","Follows service standards, side work, uniforms, cleanliness, and operating procedures.","Protected service standards even during a busy or difficult shift.","All"],["Positive Attitude","Brings energy, professionalism, and a solution-focused mindset.","Kept strong energy and professionalism while helping the team stay focused.","All"],["High-Volume Support","Steps up during rushes, stays composed, and helps the operation move efficiently.","Stayed composed during a rush and helped the operation keep pace.","All"],["Sales & Upselling","Drives beverage/food sales, upgrades, add-ons, and guest engagement appropriately.","Recommended items naturally and increased the guest experience and check average.","Servers, Bartenders"],["Accuracy & Attention to Detail","Accurate orders, reservations, checks, tickets, table numbers, and guest requests.","Caught or prevented an error in orders, reservations, tickets, or setup.","All; especially Hosts, Food Runners, Servers, SIM"],["Cleanliness & Organization","Keeps work areas stocked, clean, organized, and ready for service.","Left the work area stocked, organized, clean, and set for the next team.","All; especially Bussers, Barbacks, Bartenders"],["Training & Mentorship","Coaches peers, helps new hires, shares knowledge, and reinforces standards.","Helped a teammate learn a task, standard, or product in a supportive way.","All"],["Guest Recovery","Recognizes issues early, responds professionally, and helps turn around the guest experience.","Helped resolve a concern and restored the guest’s confidence in the experience.","All guest-facing roles"],["Initiative & Leadership","Takes ownership, anticipates needs, solves problems, and leads by example.","Saw a need, owned it, and moved the team forward without waiting for direction.","All"],["Safety & Compliance","Follows responsible alcohol service, food safety, cash handling, and workplace safety standards.","Protected guests/team by following safety, alcohol, food, or cash-handling procedures.","All"]];
+const TYPES=["Daily Recognition","Biweekly Team Spotlight","Monthly Department Recognition","Top Seller","Above & Beyond","Beverage Training"];
+const STAT=["Not Yet","Scheduled","Posted"];
+
+function seedSpot(){const s=[];let d=new Date(2026,9,2);for(let i=0;i<28;i++){s.push({dept:DEPTS[i%7],date:d.toISOString().slice(0,10),name:"",cat:"",why:"",ex:"",fun:"",fav:"",st:0});d=new Date(d.getTime()+14*864e5)}return s}
+const SEED=seedSpot();
+let S={roster:[],log:[],spot:SEED.map(x=>({...x}))},canW=true,tab="Dashboard",rdept=DEPTS[0],q="",catq="",dirty=false;
+const LK="sc_data_v2",UK="sc_ui_v2",OK="sc_outbox_v2";
+const RS={"Hosts / Hostess":"Anjelika Negron:PT,Ashley Cardoza:PT,Valentina Martinez:PT,Luisa Montoya:PT","SIM Attendants":"Abraham Rojas:FT","Servers":"Emilio Cintron:PT,Jesus Mercedes:PT,Karlyann Martinez:FT,Jorne Lopez:FT,Alexis Craig:FT,Destinee Lopez:FT,John Perefan:PT,Heather Thomas:PT,Brayan Pelaez:FT,Sydney Jimenez:FT,Aeris Rivera:FT,Luvelia Sarmiento:PT,AJ Collins:FT,Yariffe Benitez:FT,Benjamin Nino:PT,Britny Goncalves:FT,Tysen Morgan:PT","Bussers":"Alehandro Hernandez:PT,Jhon Galeano:PT,Chrismar Sanchez:PT,Salomon Sanchez:PT,Karly Contreras:PT,Kyle Guiterrez:PT","Bartenders":"Keila Avila:FT,John Schlager:PT,Kylee Wells:FT,Andrea Rodriguez:FT,Lilibeth Lopez:FT,Melissa Haas:FT,Brooke Peterson:FT,Camren Monroe:FT,Drue Parker:PT,Jeff Aime:PT","Barbacks":"Jeff Aime:PT,Johan Herrera:PT,Michele Nardulli:PT","Food Runners":"Diego De Araujo:PT,Anthony Nguyen:PT,Zavion Minuty:PT,Freddy Duran:FT,Alejandro Lopez:PT"};
+function rosterDefault(){const r=[];let n=1;Object.keys(RS).forEach(d=>RS[d].split(",").forEach(p=>{const[nm,ft]=p.split(":");r.push({id:"r"+String(n++).padStart(2,"0"),dept:d,name:nm,active:true,note:ft})}));return r}
+const rd=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let UI=rd(UK)||{},OB=rd(OK)||[];UI.form=UI.form||{};
+{const L=rd(LK);if(L){S.roster=L.roster||[];S.log=L.log||[];S.spot=SEED.map((x,i)=>({...x,...((L.spot||[])[i]||{})}))}else S.roster=rosterDefault()}
+const sv=()=>wr(LK,{roster:S.roster,log:S.log,spot:S.spot});
+const SETUP=`<div class="card" style="margin-bottom:16px"><b>Working offline on this device.</b> Everything you enter is remembered in this browser. To share it with your team, paste your Google Apps Script web app URL:<div style="display:flex;gap:8px;margin-top:8px"><input id="au" placeholder="https://script.google.com/macros/s/.../exec"><button class="btn" onclick="try{localStorage.setItem('sc_api',document.getElementById('au').value.trim())}catch(e){};location.reload()">Connect</button></div><p class="sub" style="margin:8px 0 0;font-size:12px">Tip: put the URL in the API_URL line of index.html so your whole team connects automatically. Anything you've entered here is uploaded when you connect.</p></div>`;
+function setLive(t,tip){const l=$("live");if(l){l.textContent=t;l.title=tip||""}}
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const count=n=>n?S.log.filter(l=>l.name===n).length:0;
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+// Shared data is stored by the Netlify function at /api (Netlify Blobs)
+const API_URL="/api";
+const EP=()=>API_URL||localStorage.getItem("sc_api")||"";
+async function api(fn,...a){const u=EP();if(!u)throw{offline:1};
+let r;if(fn==="getAll")r=await fetch(u+(u.includes("?")?"&":"?")+"action=getAll&t="+Date.now());
+else r=await fetch(u,{method:"POST",body:JSON.stringify(fn==="save"?{action:"save",key:a[0],rec:a[1]}:{action:"remove",key:a[0],id:a[1]})});
+const j=await r.json();if(j.error)throw new Error(j.error);return j.data}
+let sdv="Entire staff",sfw=true;
+let pending=0,lastSig="";
+const sob=()=>wr(OK,OB);
+async function send(fn,args){pending++;try{await api(fn,...args)}catch(e){if(!(e&&e.offline)){OB.push([fn,args]);sob();setLive("Sync pending","Couldn't reach the shared sheet. Your changes are saved on this device and will upload automatically.");toast("Saved on this device. Will sync when back online.")}}finally{pending--}}
+async function flush(){while(OB.length){try{await api(OB[0][0],...OB[0][1])}catch(e){return false}OB.shift();sob()}return true}
+function put(c,id,o){const rec={...o,id};if(c==="spot")S.spot[+id.slice(1)-1]=rec;else{const i=S[c].findIndex(x=>x.id===id);if(i>=0)S[c][i]=rec;else S[c].push(rec)}sv();later();return send("save",[c,rec])}
+const add=(c,o)=>put(c,Date.now().toString(36)+Math.random().toString(36).slice(2,6),o);
+function del(c,id){S[c]=S[c].filter(x=>x.id!==id);sv();later();return send("remove",[c,id])}
+function sure(b,f){if(b.dataset.s){f();return}b.dataset.s=1;b.textContent="Delete?";b.style.cssText="font-size:12px;color:#c0392b";setTimeout(()=>{b.dataset.s="";b.textContent="×";b.style.cssText=""},2500)}
+const spid=i=>"s"+String(i+1).padStart(2,"0");
+const sp_=(i,p)=>{const{id:_,...o}=S.spot[i]||{};return put("spot",spid(i),{...SEED[i],...o,...p})};
+const rp=(id,p)=>{const x=S.roster.find(r=>r.id===id);if(x){const{id:_,...o}=x;put("roster",id,{...o,...p})}};
+const opts=(a,sel,blank)=>(blank?`<option value="">${blank}</option>`:"")+a.map(x=>`<option${x===sel?" selected":""}>${esc(x)}</option>`).join("");
+const TABS=["Dashboard","Rosters","Recognition Log","Spotlight Planner","Categories & Ideas"];
+function nav(){$("nav").innerHTML=TABS.map(t=>`<button class="${t===tab?"on":""}" onclick="go('${t}')">${t}</button>`).join("")}
+function go(t){tab=t;nav();render();scrollTo(0,0)}
+function render(){dirty=false;const ban=canW?"":`<div class="empty" style="margin-bottom:16px">You have view-only access. Ask the owner for Contributor access to add or edit entries.</div>`;
+$("app").innerHTML=(EP()?"":SETUP)+ban+({"Dashboard":dash,"Rosters":rosters,"Recognition Log":logv,"Spotlight Planner":spot,"Categories & Ideas":ref})[tab]()+`<footer><button class="btn ghost sm" onclick="exp()">Export backup</button></footer>`;if(tab==="Recognition Log")applyForm();UI.tab=tab;UI.rdept=rdept;UI.q=q;UI.catq=catq;wr(UK,UI)}
+function applyForm(){const F=UI.form;fillNames();["f_name","f_type","f_cat","f_by","f_shift","f_el","f_what"].forEach(k=>{const e=$(k);if(!e||F[k]===undefined)return;if(e.tagName==="SELECT"){if([...e.options].some(o=>o.value===F[k]))e.value=F[k]}else e.value=F[k]})}
+["input","change"].forEach(t=>document.addEventListener(t,ev=>{const x=ev.target;if(x.id&&x.id.startsWith("f_")&&x.id!=="f_date"){UI.form[x.id]=x.value;if(x.id==="f_dept")rdept=x.value;wr(UK,UI)}}));
+function later(strict){const a=document.activeElement;if(a&&$("app").contains(a)&&(strict?/INPUT|TEXTAREA|SELECT/:/INPUT|TEXTAREA/).test(a.tagName)){dirty=true}else render()}
+document.addEventListener("focusout",()=>{if(dirty)setTimeout(()=>{const a=document.activeElement;if(!(a&&$("app").contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)))render()},150)});
+function dash(){
+const names=[...new Set(S.log.map(l=>l.name))],rep=names.filter(n=>count(n)>1).length,posted=S.spot.filter(s=>s.st===2).length;
+const mx=Math.max(1,...DEPTS.map(d=>S.log.filter(l=>l.dept===d).length));
+const latest=[...S.log].sort(cmp).slice(0,3);
+return `<h2>Recognize everyone, fairly.</h2><p class="sub">One shared log for the whole management team. Changes appear for everyone as they happen.</p>
+<div class="kpis"><div class="kpi"><b>${S.log.length}</b><span>Recognition entries</span></div><div class="kpi"><b>${names.length}</b><span>Associates recognized</span></div><div class="kpi"><b>${posted}</b><span>Team spotlights posted</span></div><div class="kpi"><b>${rep}</b><span>Recognized 2+ times</span></div></div>
+<div class="spin"><div><h3>Who's next for a spotlight?</h3><p>Spin one department or the entire staff. Only active associates on the roster are included.</p><div style="margin-top:10px;display:flex;gap:8px"><select id="sd" style="width:auto" onchange="sdv=this.value">${opts(["Entire staff",...DEPTS],sdv)}</select><button class="btn lime" onclick="spin()">Spin</button></div><label style="color:#dcd2ea;margin:10px 0 0;display:flex;gap:6px;align-items:center;font-weight:500"><input type="checkbox" id="fw" style="width:auto" ${sfw?"checked":""} onchange="sfw=this.checked"> Only pick from those recognized the fewest times</label></div><div class="out" id="so">Pick a department</div></div>
+<h3>Departments <span class="sub" style="font-size:12px">(tap to open roster)</span></h3>
+<div class="grid">${DEPTS.map(d=>{const r=S.roster.filter(x=>x.dept===d&&x.active).length,e=S.log.filter(l=>l.dept===d).length;return `<button class="card dept" onclick="rdept='${d}';go('Rosters')"><h3>${d}<span class="pill">${r} on roster</span></h3><div class="bar"><i style="width:${e/mx*100}%"></i></div><p><b>${e}</b> entries · ${esc(FOCUS[d])}</p></button>`}).join("")}</div>
+<h3 style="margin-top:24px">Latest wins</h3>${latest.length?latest.map(l=>entry(l)).join(""):`<div class="empty">No recognition logged yet.<br><br><button class="btn" onclick="go('Recognition Log')">Log the first win</button></div>`}`}
+const cmp=(a,b)=>(b.date||"").localeCompare(a.date||"")||(b.ts||0)-(a.ts||0);
+function spin(){const d=$("sd").value,all=d==="Entire staff",p=S.roster.filter(x=>(all||x.dept===d)&&x.active&&x.name);
+if(!p.length){$("so").textContent="Add names to "+(all?"the roster":d)+" first";return}
+const by={};p.forEach(x=>(by[x.name]=by[x.name]||[]).push(x.dept));const names=Object.keys(by);
+const m=Math.min(...names.map(count)),pool=$("fw").checked?names.filter(n=>count(n)===m):names;let i=0;
+const t=setInterval(()=>{$("so").textContent=names[Math.floor(Math.random()*names.length)];if(++i>14){clearInterval(t);const w=pool[Math.floor(Math.random()*pool.length)],c=count(w);$("so").innerHTML=esc(w)+`<div style="font-size:12px;font-weight:600;color:#fff">${esc(by[w].join(" / "))} · ${c} prior recognition${c==1?"":"s"}</div>`}},70)}
+function rosters(){const list=S.roster.filter(x=>x.dept===rdept).sort((a,b)=>a.name.localeCompare(b.name));
+return `<h2>Rosters</h2><p class="sub">${esc(FOCUS[rdept])}</p>
+<div class="chips">${DEPTS.map(d=>`<button class="chip ${d===rdept?"on":""}" onclick="rdept='${d}';render()">${d} · ${S.roster.filter(x=>x.dept===d).length}</button>`).join("")}</div>
+<div style="display:flex;gap:8px;margin-bottom:12px"><input id="nn" placeholder="Add associate name to ${esc(rdept)}" onkeydown="if(event.key==='Enter')addP()"><button class="btn" onclick="addP()">Add</button></div>
+${list.length?list.map(x=>`<div class="row"><b>${esc(x.name)} <span class="pill">${count(x.name)}× recognized</span></b><select onchange="rp('${x.id}',{active:this.value==='Yes'})"><option${x.active?" selected":""}>Yes</option><option${x.active?"":" selected"}>No</option></select><input class="nt" placeholder="Notes / cross-training" value="${esc(x.note)}" onchange="rp('${x.id}',{note:this.value})"><button class="x" title="Remove" onclick="sure(this,()=>del('roster','${x.id}'))">×</button></div>`).join(""):`<div class="empty">No one on the ${esc(rdept)} roster yet. Type a name above.</div>`}`}
+function addP(){const v=$("nn").value.trim();if(!v)return;add("roster",{dept:rdept,name:v,active:true,note:""});render();$("nn").focus()}
+function logv(){const today=new Date().toISOString().slice(0,10);
+const shown=[...S.log].filter(l=>!q||JSON.stringify(l).toLowerCase().includes(q.toLowerCase())).sort(cmp);
+return `<h2>Recognition Log</h2><p class="sub">Capture daily wins and monthly nominations.</p>
+<div class="card form"><div><label>Date</label><input type="date" id="f_date" value="${today}"></div>
+<div><label>Department</label><select id="f_dept" onchange="fillNames()">${opts(DEPTS,rdept)}</select></div>
+<div><label>Associate</label><select id="f_name"></select></div>
+<div><label>Recognition type</label><select id="f_type">${opts(TYPES)}</select></div>
+<div><label>Category</label><select id="f_cat">${opts(CATS.map(c=>c[0]))}</select></div>
+<div><label>Manager / nominator</label><input id="f_by"></div>
+<div><label>Shift / event</label><input id="f_shift"></div>
+<div><label>Spotlight eligible?</label><select id="f_el"><option>Yes</option><option>No</option></select></div>
+<div class="wide"><label>What they did</label><textarea id="f_what" rows="2"></textarea></div>
+<div class="wide"><button class="btn pp" onclick="addL()">Save recognition</button></div></div>
+<input id="sq" placeholder="Search the log by name, category, or keyword" value="${esc(q)}" oninput="q=this.value;clearTimeout(window.qt);window.qt=setTimeout(()=>{render();const e=$('sq');e.focus();e.setSelectionRange(99,99)},250)" style="margin-bottom:12px">
+${shown.length?shown.map(l=>entry(l,true)).join(""):`<div class="empty">No entries${q?" match your search":" yet. Fill in the form above to log the first win."}</div>`}`}
+function fillNames(){const f=$("f_dept");if(!f)return;const n=S.roster.filter(x=>x.dept===f.value&&x.active&&x.name).map(x=>x.name).sort();$("f_name").innerHTML=n.length?opts(n):`<option value="">Add names on Rosters first</option>`}
+function entry(l,canDel){const c=count(l.name);return `<div class="card entry ${c>1?"rep":""}" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>${esc(l.name)} <span style="color:var(--mute);font-weight:500">· ${esc(l.dept)}</span></b><span><span class="pill pp">${esc(l.cat)}</span> <span class="pill ${c>1?"warn":"ok"}">${c>1?"Check repeat · "+c+"×":"OK"}</span> ${canDel?`<button class="x" title="Delete" onclick="sure(this,()=>del('log','${l.id}'))">×</button>`:""}</span></div>${l.what?`<p style="margin:8px 0 0">${esc(l.what)}</p>`:""}<div class="meta">${esc(l.date)} · ${esc(l.type)}${l.by?" · by "+esc(l.by):""}${l.shift?" · "+esc(l.shift):""}${l.el==="Yes"?" · spotlight eligible":""}</div></div>`}
+function addL(){const g=id=>$(id).value;if(!g("f_name")){toast("Pick an associate first");return}
+rdept=g("f_dept");add("log",{date:g("f_date"),dept:g("f_dept"),name:g("f_name"),type:g("f_type"),cat:g("f_cat"),what:g("f_what"),by:g("f_by"),shift:g("f_shift"),el:g("f_el"),ts:Date.now()});UI.form.f_what="";UI.form.f_name="";toast("Recognition saved");render()}
+function spot(){return `<h2>Spotlight Planner</h2><p class="sub">One spotlight every two weeks, rotating departments. REVIEW means the associate has already been recognized more than once.</p>
+${S.spot.map((s,i)=>{const p=S.roster.filter(x=>x.dept===s.dept&&x.active).map(x=>x.name).sort(),c=count(s.name);
+return `<div class="card sp" style="margin-bottom:10px"><div class="n">${i+1}</div><div><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px"><b>${esc(s.date)}</b><span><select style="width:auto;padding:4px" onchange="sp_(${i},{dept:this.value,name:''})">${opts(DEPTS,s.dept)}</select> ${s.name?`<span class="pill ${c>1?"warn":"ok"}">${c}× · ${c>1?"REVIEW":"OK"}</span>`:""} <button class="pill st ${s.st==2?"ok":s.st==1?"pp":""}" onclick="sp_(${i},{st:${(s.st+1)%3}})">${STAT[s.st]}</button></span></div>
+<div class="flds"><div><label>Associate</label><select onchange="sp_(${i},{name:this.value})">${opts(p,s.name,"Select…")}</select></div><div><label>Category</label><select onchange="sp_(${i},{cat:this.value})">${opts(CATS.map(c=>c[0]),s.cat,"Select…")}</select></div>
+${[["why","Why they’re recognized"],["ex","Recent example"],["fun","Fun fact / hobby"],["fav","Favorite food / drink"]].map(([k,t])=>`<div><label>${t}</label><input value="${esc(s[k])}" onchange="sp_(${i},{${k}:this.value})"></div>`).join("")}</div></div></div>`}).join("")}`}
+function ref(){const cs=CATS.filter(c=>!catq||c.join(" ").toLowerCase().includes(catq.toLowerCase()));
+return `<h2>Categories & Ideas</h2><p class="sub">Quick reference for pre-shift and manager pass-on.</p>
+<input id="cq" placeholder="Filter categories" value="${esc(catq)}" oninput="catq=this.value;clearTimeout(window.qt);window.qt=setTimeout(()=>{render();const e=$('cq');e.focus();e.setSelectionRange(99,99)},250)" style="margin-bottom:14px">
+<div class="grid">${cs.map(c=>`<details class="card"><summary>${c[0]}</summary><p style="margin:8px 0">${c[1]}</p><p style="color:var(--mute);margin:0"><b>Example:</b> ${c[2]}</p><p style="margin:8px 0 0"><span class="pill">Best for: ${c[3]}</span></p></details>`).join("")}</div>
+<h3 style="margin-top:24px">By department</h3><div class="grid">${DEPTS.map(d=>`<details class="card"><summary>${d}</summary><p style="color:var(--mute);margin:8px 0">${FOCUS[d]}</p>${IDEAS[d]?`<ul>${IDEAS[d].map((x,j)=>`<li><b>${IDEA_LBL[j]}:</b> ${x}</li>`).join("")}</ul>`:""}</details>`).join("")}</div>`}
+function exp(){const a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify({roster:S.roster,log:S.log,spot:S.spot}));a.download="stadium-club-recognition-backup.json";a.click()}
+async function load(){try{
+if(OB.length&&!(await flush())){setLive("Sync pending","Your changes are saved on this device and will upload automatically.");return}
+let d=await api("getAll");
+if(!d.roster.length){rosterDefault().forEach(r=>OB.push(["save",["roster",r]]));sob();if(await flush())d=await api("getAll");else d.roster=rosterDefault()}
+if(!d.log.length&&!d.spot.length&&(S.log.length||S.spot.some(r=>r.id))){S.roster.forEach(r=>OB.push(["save",["roster",r]]));S.log.forEach(r=>OB.push(["save",["log",r]]));S.spot.forEach(r=>{if(r.id)OB.push(["save",["spot",r]])});sob();if(await flush())d=await api("getAll");else return}
+const sig=JSON.stringify(d);setLive("Live · shared","Connected to the team's shared Google Sheet. Everyone sees the same data, refreshed every 15 seconds.");
+if(sig===lastSig)return;lastSig=sig;S.roster=d.roster;S.log=d.log;S.spot=SEED.map((x,i)=>({...x,...(d.spot.find(r=>r.id===spid(i))||{})}));sv();later(true)}
+catch(e){if(e&&e.offline)return;setLive("Reconnecting…","Can't reach the shared sheet right now. You're seeing the last saved copy; changes will sync when it's back.")}}
+if(UI.tab&&TABS.includes(UI.tab))tab=UI.tab;if(DEPTS.includes(UI.rdept))rdept=UI.rdept;q=UI.q||"";catq=UI.catq||"";
+nav();render();
+if(EP()){setLive("Connecting…","Contacting the team's shared Google Sheet.");load()}else setLive("Saved on this device","Not connected to a shared sheet. Everything you enter is remembered in this browser only.");
+setInterval(()=>{if(!document.hidden&&!pending&&EP())load()},15000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!pending&&EP())load()});
+</script></body></html>
