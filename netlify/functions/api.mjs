@@ -38,6 +38,7 @@ export default async (req) => {
           out[k] = recs.filter(Boolean);
         })
       );
+      out.seeded = (await store.get("meta/seeded")) !== null;
       return json({ data: out });
     }
     if (req.method === "POST") {
@@ -46,6 +47,16 @@ export default async (req) => {
       if (b.action === "save") {
         if (!b.rec || !ID.test(String(b.rec.id))) return json({ error: "Bad id" }, 400);
         await store.setJSON(`${b.key}/${b.rec.id}`, clean(b.key, b.rec));
+        return json({ data: true });
+      }
+      if (b.action === "seeded") {
+        await store.set("meta/seeded", "1");
+        return json({ data: true });
+      }
+      if (b.action === "saveMany") {
+        const recs = Array.isArray(b.recs) ? b.recs.slice(0, 200) : [];
+        if (recs.some((r) => !r || !ID.test(String(r.id)))) return json({ error: "Bad id" }, 400);
+        await Promise.all(recs.map((r) => store.setJSON(`${b.key}/${r.id}`, clean(b.key, r))));
         return json({ data: true });
       }
       if (b.action === "remove") {
