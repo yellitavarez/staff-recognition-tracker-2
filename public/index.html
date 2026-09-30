@@ -103,7 +103,7 @@ const API_URL="/api";
 const EP=()=>API_URL||localStorage.getItem("sc_api")||"";
 async function api(fn,...a){const u=EP();if(!u)throw{offline:1};
 let r;if(fn==="getAll")r=await fetch(u+(u.includes("?")?"&":"?")+"action=getAll&t="+Date.now());
-else r=await fetch(u,{method:"POST",body:JSON.stringify(fn==="save"?{action:"save",key:a[0],rec:a[1]}:{action:"remove",key:a[0],id:a[1]})});
+else r=await fetch(u,{method:"POST",body:JSON.stringify(({save:{action:"save",key:a[0],rec:a[1]},saveMany:{action:"saveMany",key:a[0],recs:a[1]},remove:{action:"remove",key:a[0],id:a[1]},seeded:{action:"seeded"}})[fn])});
 const j=await r.json();if(j.error)throw new Error(j.error);return j.data}
 let sdv="Entire staff",sfw=true;
 let pending=0,lastSig="";
@@ -182,7 +182,7 @@ function exp(){const a=document.createElement("a");a.href="data:application/json
 async function load(){try{
 if(OB.length&&!(await flush())){setLive("Sync pending","Your changes are saved on this device and will upload automatically.");return}
 let d=await api("getAll");
-if(!d.roster.length){rosterDefault().forEach(r=>OB.push(["save",["roster",r]]));sob();if(await flush())d=await api("getAll");else d.roster=rosterDefault()}
+if(!d.seeded){const have=new Set(d.roster.map(r=>r.id)),miss=rosterDefault().filter(r=>!have.has(r.id));OB.push(["saveMany",["roster",miss]],["seeded",[]]);sob();if(await flush())d=await api("getAll");else d.roster=[...d.roster,...miss]}
 if(!d.log.length&&!d.spot.length&&(S.log.length||S.spot.some(r=>r.id))){S.roster.forEach(r=>OB.push(["save",["roster",r]]));S.log.forEach(r=>OB.push(["save",["log",r]]));S.spot.forEach(r=>{if(r.id)OB.push(["save",["spot",r]])});sob();if(await flush())d=await api("getAll");else return}
 const sig=JSON.stringify(d);setLive("Live · shared","Connected to the team's shared Google Sheet. Everyone sees the same data, refreshed every 15 seconds.");
 if(sig===lastSig)return;lastSig=sig;S.roster=d.roster;S.log=d.log;S.spot=SEED.map((x,i)=>({...x,...(d.spot.find(r=>r.id===spid(i))||{})}));sv();later(true)}
